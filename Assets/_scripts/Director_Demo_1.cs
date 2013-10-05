@@ -5,6 +5,7 @@ public class Director_Demo_1 : MonoBehaviour {
 	
 	VectorLine myLine;
 	VectorPoints indicator;
+	public GameObject indicator2;
 	public Vector2 angles;
 	public GameObject shoulder;
 	public GameObject elbow;
@@ -32,17 +33,26 @@ public class Director_Demo_1 : MonoBehaviour {
 			if (Input.mousePosition.x > 50 && Input.mousePosition.x < 250 && Input.mousePosition.y > 100 && Input.mousePosition.y < 300) {
 			//	Debug.Log("IN BOX!");
 				indicator.points2[0] = Input.mousePosition;
+			
 				setAngles(Input.mousePosition);
 				indicator.Draw();
 				
 			}
 		}
+	
+		
 		if (Input.GetKeyDown (KeyCode.Space)) {
+			if (Input.mousePosition.x > 50 && Input.mousePosition.x < 250 && Input.mousePosition.y > 100 && Input.mousePosition.y < 300) {
+		//		iTween.ValueTo(this, iTween.Hash("x", Input.mousePosition.x, "y", Input.mousePosition.y, "time", 2.0f));
+			}			
+			
 			myLine.points2[0] = new Vector2(0, Screen.height); 
 			myLine.points2[1] = new Vector2(Screen.width, 0); 
 			myLine.Draw();
 		}
-	
+		shoulder.transform.eulerAngles = new Vector3(0,0,angles.x);
+		elbow.transform.eulerAngles = new Vector3(0,0,angles.y);
+
 	}
 	
 	
@@ -50,8 +60,6 @@ public class Director_Demo_1 : MonoBehaviour {
 		angles.x = map (position.x, 50.0f, 250.0f, 0f, 360.0f);
 		angles.y = map (position.y, 100.0f, 300.0f, 0f, 360.0f);
 		
-		shoulder.transform.eulerAngles = new Vector3(0,0,angles.x);
-		elbow.transform.eulerAngles = new Vector3(0,0,angles.y);
 	}
 	
 
@@ -60,4 +68,8 @@ public class Director_Demo_1 : MonoBehaviour {
 	    return b1 + (s-a1)*(b2-b1)/(a2-a1);
 
 	}
+	
+	void onupdate(Vector2 p) {
+		indicator.points2[0] = p;
+	}	
 }
